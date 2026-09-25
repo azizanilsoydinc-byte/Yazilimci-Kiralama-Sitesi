@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kodla — Yazılımını sipariş et, doğru geliştiriciyle buluş</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header-mount"></div>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">// yazılım siparişi artık bu kadar kolay</div>
+      <h1>İhtiyacın olan yazılımı <span class="accent">tarif et</span>,<br>doğru geliştirici <span class="accent">teklif versin</span>.</h1>
+      <p class="lead">Kodla, işini yaptırmak isteyen alıcılarla bunu üretecek yazılım geliştiricileri bir araya getirir. İhtiyacını yaz, bütçeni belirt, teklifleri karşılaştır, sipariş sürecini sohbet üzerinden takip et.</p>
+      <div class="hero-cta">
+        <a href="kayit.html?role=alici" class="btn btn-primary">Alıcı olarak başla</a>
+        <a href="kayit.html?role=satici" class="btn btn-outline">Satıcı olarak katıl</a>
+      </div>
+      <div class="hero-stats">
+        <div><b id="stat-sellers">—</b><span>Aktif geliştirici</span></div>
+        <div><b id="stat-orders">—</b><span>Tamamlanan sipariş</span></div>
+        <div><b>%100</b><span>Sohbet üzerinden takip</span></div>
+      </div>
+    </div>
+    <div class="code-card">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <div class="line"><span class="c">// yeni_siparis.js</span></div>
+      <div class="line"><span class="k">const</span> siparis = {</div>
+      <div class="line">&nbsp;&nbsp;istek: <span class="s">"Stok takip paneli"</span>,</div>
+      <div class="line">&nbsp;&nbsp;butce: <span class="n">15000</span>,</div>
+      <div class="line">&nbsp;&nbsp;durum: <span class="s">"teklif_bekleniyor"</span></div>
+      <div class="line">};</div>
+      <div class="line"><span class="k">await</span> satici.teklifVer(siparis);</div>
+      <div class="line"><span class="c">// ✓ satıcı bildirim aldı</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="nasil-calisir">
+  <div class="container">
+    <div class="section-head">
+      <h2>Nasıl çalışır</h2>
+      <p>Kayıttan teslimata kadar dört basit adım.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h3>Kayıt ol</h3><p>Alıcı olarak veya yaptığın işleri anlatarak satıcı olarak birkaç dakikada hesap oluştur.</p></div>
+      <div class="step"><div class="num">02</div><h3>Teklif gönder</h3><p>Beğendiğin satıcının profiline git, ihtiyacını yaz ve bütçe teklifini ilet.</p></div>
+      <div class="step"><div class="num">03</div><h3>Anlaşın</h3><p>Satıcı teklifi kabul eder ya da karşı teklif verir; anlaşınca sipariş otomatik açılır.</p></div>
+      <div class="step"><div class="num">04</div><h3>Takip et</h3><p>Sohbet üzerinden dosya paylaşın, sipariş durumunu izleyin, hazır olunca bildirim alın.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="saticilar" style="background:var(--panel);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="section-head">
+      <h2>Öne çıkan satıcılar</h2>
+      <p>Farklı uzmanlık alanlarından deneyimli geliştiriciler.</p>
+    </div>
+    <div class="grid-cards" id="landing-sellers"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="text-align:center">
+    <h2 style="font-size:1.7rem">Yazılımını yaptıracak birini mi arıyorsun, yoksa geliştirici misin?</h2>
+    <p style="max-width:56ch;margin:10px auto 24px">Her iki taraf için de kayıt bir dakikadan kısa sürer.</p>
+    <div class="hero-cta" style="justify-content:center">
+      <a href="kayit.html?role=alici" class="btn btn-primary">Alıcı olarak kayıt ol</a>
+      <a href="kayit.html?role=satici" class="btn btn-outline">Satıcı olarak kayıt ol</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:10px"><span class="dot"></span> Kodla</div>
+        <p style="font-size:.88rem;max-width:32ch">Yazılım siparişi vermenin ve almanın en kolay yolu.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Instagram">📸</a>
+          <a href="#" aria-label="X / Twitter">🐦</a>
+          <a href="#" aria-label="LinkedIn">💼</a>
+          <a href="#" aria-label="GitHub">💻</a>
+        </div>
+      </div>
+      <div>
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="index.html#nasil-calisir">Nasıl Çalışır</a></li>
+          <li><a href="index.html#saticilar">Satıcılar</a></li>
+          <li><a href="kayit.html">Kayıt Ol</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Destek</h4>
+        <ul>
+          <li><a href="sss.html">Sıkça Sorulan Sorular</a></li>
+          <li><a href="destek.html">Destek Merkezi</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hesap</h4>
+        <ul>
+          <li><a href="giris.html?role=alici">Alıcı Girişi</a></li>
+          <li><a href="giris.html?role=satici">Satıcı Girişi</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kodla — prototip sürüm</span>
+      <span>Tüm verileri tarayıcında saklanır</span>
+    </div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="alici.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const sellers = allSellers().slice(0,3);
+    document.getElementById('landing-sellers').innerHTML = sellers.map(sellerCardHtml).join('');
+    document.getElementById('stat-sellers').textContent = allSellers().length;
+    document.getElementById('stat-orders').textContent = DB.orders().length;
+  });
+</script>
+</body>
+</html>

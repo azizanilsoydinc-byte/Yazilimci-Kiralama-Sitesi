@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Satıcı Paneli — Kodla</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header-mount"></div>
+
+<div class="app-shell">
+  <aside class="side-nav">
+    <div class="who">
+      <img id="who-avatar" class="avatar" alt="">
+      <div><b id="who-name"></b><span>Satıcı hesabı</span></div>
+    </div>
+    <nav>
+      <button class="tab-link active" data-tab="bildirim">🔔 Bildirimler</button>
+      <button class="tab-link" data-tab="teklif">📨 Gelen Teklifler <span class="count" id="teklif-count" style="display:none"></span></button>
+      <button class="tab-link" data-tab="siparis">📦 Siparişlerim</button>
+      <button class="tab-link" data-tab="profil">⚙️ Profilim</button>
+      <a href="mesajlar.html">💬 Mesajlar</a>
+    </nav>
+  </aside>
+
+  <main class="main-panel">
+    <div id="tab-bildirim" class="tab-panel">
+      <div class="panel-head"><h1>Bildirimler</h1></div>
+      <div id="notif-tab-list"></div>
+    </div>
+
+    <div id="tab-teklif" class="tab-panel" style="display:none">
+      <div class="panel-head"><h1>Gelen teklifler</h1></div>
+      <div id="incoming-offers"></div>
+    </div>
+
+    <div id="tab-siparis" class="tab-panel" style="display:none">
+      <div class="panel-head"><h1>Siparişlerim</h1></div>
+      <div id="seller-orders"></div>
+    </div>
+
+    <div id="tab-profil" class="tab-panel" style="display:none">
+      <div class="panel-head"><h1>Profil ayarları</h1></div>
+      <form id="seller-settings-form" class="panel-block" style="max-width:560px">
+        <div class="field">
+          <label>Unvan / uzmanlık başlığın</label>
+          <input type="text" id="set-title">
+        </div>
+        <div class="field">
+          <label>Hakkımda</label>
+          <textarea id="set-hakkinda"></textarea>
+        </div>
+        <div class="field">
+          <label>Uzmanlık alanları (virgülle ayır)</label>
+          <input type="text" id="set-uzmanlik">
+        </div>
+        <div class="field">
+          <label>Proje başına fiyat aralığın (₺)</label>
+          <div class="range-inputs">
+            <input type="number" id="set-min">
+            <span>—</span>
+            <input type="number" id="set-max">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+      </form>
+    </div>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="satici.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const user = requireAuth('satici');
+    if(!user) return;
+    document.getElementById('who-avatar').src = user.avatar;
+    document.getElementById('who-name').textContent = user.name;
+
+    renderNotifTab();
+    renderIncomingOffers();
+    renderSellerOrders();
+    initSellerProfileForm();
+
+    const pendingCount = DB.offers().filter(o=> o.sellerId === user.id && o.durum === 'bekliyor').length;
+    const countEl = document.getElementById('teklif-count');
+    if(pendingCount){ countEl.style.display='inline-block'; countEl.textContent = pendingCount; }
+
+    const tabs = document.querySelectorAll('.tab-link');
+    function showTab(name){
+      tabs.forEach(t=> t.classList.toggle('active', t.dataset.tab === name));
+      document.querySelectorAll('.tab-panel').forEach(p=> p.style.display = 'none');
+      document.getElementById('tab-'+name).style.display = 'block';
+    }
+    tabs.forEach(t=> t.addEventListener('click', ()=> showTab(t.dataset.tab)));
+
+    const params = new URLSearchParams(window.location.search);
+    const wanted = params.get('tab');
+    if(wanted === 'teklifler') showTab('teklif');
+    else if(wanted === 'siparisler') showTab('siparis');
+    else if(wanted === 'profil') showTab('profil');
+  });
+</script>
+</body>
+</html>

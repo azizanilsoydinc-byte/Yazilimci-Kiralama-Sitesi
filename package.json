@@ -1,0 +1,19 @@
+{
+  "name": "kodla",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Alıcıların ihtiyaç duydukları yazılımı tarif edip satıcılardan teklif aldığı, tekliflerin pazarlıkla (karşı teklif) anlaşmaya dönüştüğü, sonrasında sipariş sürecinin sohbet üzerinden (dosya/video paylaşımlı) yönetildiği bir platform.",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "test": "node -e \"console.log('Bu proje statik bir GitHub Pages uygulamasıdır. Yerel önizleme için bir statik HTTP sunucusu kullanılabilir.')\""
+  },
+  "keywords": [
+    "github-pages",
+    "static-site",
+    "html",
+    "javascript"
+  ],
+  "author": "",
+  "license": "ISC"
+}

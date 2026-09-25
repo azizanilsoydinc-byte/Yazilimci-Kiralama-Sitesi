@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kodla Yönetici Paneli</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="header-mount"></div>
+
+  <div class="admin-shell">
+    <aside class="admin-sidebar side-nav">
+      <div class="who">
+        <img src="https://i.pravatar.cc/200?img=64" class="avatar" alt="admin" />
+        <div>
+          <b>Kodla Yönetimi</b>
+          <span>Admin paneli</span>
+        </div>
+      </div>
+      <nav>
+        <button class="tab-link active" data-tab="inbox">📬 Gelen destek talepleri</button>
+      </nav>
+    </aside>
+
+    <main class="main-panel admin-main">
+      <div id="tab-inbox" class="tab-panel">
+        <div class="panel-head">
+          <h1>Canlı destek</h1>
+        </div>
+        <div id="admin-support-list" class="admin-support-list"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    function requireAdmin(){
+      const user = DB.currentUser();
+      if(!user || user.role !== 'admin'){
+        window.location.href = 'giris.html?role=admin';
+        return null;
+      }
+      return user;
+    }
+
+    function renderAdminSupportList(){
+      const listEl = document.getElementById('admin-support-list');
+      if(!listEl) return;
+      const threads = JSON.parse(localStorage.getItem('kodla_support_threads') || '[]');
+      if(threads.length === 0){
+        listEl.innerHTML = '<div class="empty-state"><div class="glyph">∅</div>Henüz hiç destek talebi gelmedi.</div>';
+        return;
+      }
+
+      listEl.innerHTML = threads.map(thread => {
+        const last = thread.messages[thread.messages.length - 1];
+        return `
+          <div class="list-card support-thread-card">
+            <div class="meta">
+              <div>
+                <h3>${thread.name}</h3>
+                <div class="sub">${thread.userId ? 'Kayıtlı kullanıcı' : 'Misafir kullanıcı'}</div>
+              </div>
+              <div style="text-align:right">
+                <button class="btn btn-ghost btn-sm" data-thread-open="${thread.key}">Aç</button>
+                <button class="btn btn-danger btn-sm" data-thread-close="${thread.key}" style="margin-top:8px">Kapat</button>
+              </div>
+            </div>
+            <div class="sub" style="margin-top:10px">${last ? last.text : 'Mesaj yok'}</div>
+          </div>
+        `;
+      }).join('');
+
+      listEl.querySelectorAll('[data-thread-open]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const threadKey = btn.dataset.threadOpen;
+          const threads = JSON.parse(localStorage.getItem('kodla_support_threads') || '[]');
+          const thread = threads.find(t => t.key === threadKey);
+          if(!thread) return;
+          const messages = thread.messages || [];
+          const main = document.getElementById('admin-support-list');
+          const html = `
+            <div class="support-admin-thread">
+              <div class="panel-head"><h3>${thread.name}</h3></div>
+              <div class="support-thread-chat">
+                ${messages.map(m => `
+                  <div class="support-bubble ${m.role === 'admin' ? 'admin' : 'user'}">
+                    <strong>${m.name}</strong>
+                    <p>${m.text}</p>
+                    <small>${new Date(m.tarih).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</small>
+                  </div>
+                `).join('') || '<div class="support-empty">Bu thread için mesaj yok.</div>'}
+              </div>
+              <div class="support-thread-reply">
+                <textarea id="admin-reply-${thread.key}" placeholder="Cevabını yaz..."></textarea>
+                <button class="btn btn-primary" data-thread-reply="${thread.key}">Gönder</button>
+              </div>
+            </div>
+          `;
+          main.innerHTML = html;
+
+          main.querySelector('[data-thread-reply]')?.addEventListener('click', () => {
+            const input = document.getElementById('admin-reply-' + thread.key);
+            if(!input || !input.value.trim()) return;
+            const all = JSON.parse(localStorage.getItem('kodla_support_threads') || '[]');
+            const target = all.find(t => t.key === thread.key);
+            if(target){
+              target.messages.push({
+                id: 'support_admin_' + Date.now(),
+                name: 'Kodla Yönetimi',
+                text: input.value.trim(),
+                role: 'admin',
+                tarih: Date.now()
+              });
+              localStorage.setItem('kodla_support_threads', JSON.stringify(all));
+              renderAdminSupportList();
+            }
+          });
+        });
+      });
+
+      listEl.querySelectorAll('[data-thread-close]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const key = btn.dataset.threadClose;
+          deleteSupportThread(key);
+          renderAdminSupportList();
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = requireAdmin();
+      if(!user) return;
+      renderHeader();
+      renderAdminSupportList();
+    });
+  </script>
+</body>
+</html>

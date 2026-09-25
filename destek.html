@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Destek Merkezi — Kodla</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header-mount"></div>
+
+<div class="container" style="padding:48px 24px 70px;max-width:900px">
+  <h1 style="font-size:1.9rem;margin-bottom:8px">Destek Merkezi</h1>
+  <p style="margin-bottom:30px">Bir sorun mu yaşıyorsun, yoksa bir şey mi sormak istiyorsun? Sana yardımcı olalım.</p>
+
+  <div class="support-grid" style="margin-bottom:36px">
+    <div class="support-option">
+      <div class="glyph">?</div>
+      <h3 style="font-size:1rem;margin-bottom:6px">Önce SSS'ye göz at</h3>
+      <p style="margin-bottom:14px">Çoğu sorunun cevabı sıkça sorulan sorular sayfasında zaten var.</p>
+      <a href="sss.html" class="btn btn-outline btn-sm">SSS'ye git</a>
+    </div>
+    <div class="support-option">
+      <div class="glyph">@</div>
+      <h3 style="font-size:1rem;margin-bottom:6px">E-posta ile ulaş</h3>
+      <p style="margin-bottom:14px">Talebini detaylıca yazmak istersen doğrudan e-posta gönderebilirsin.</p>
+      <a href="mailto:destek@kodla.com" class="btn btn-outline btn-sm">destek@kodla.com</a>
+    </div>
+  </div>
+
+  <div class="panel-block" style="max-width:560px">
+    <h3>Destek talebi oluştur</h3>
+    <div class="error-box" id="ticket-error"></div>
+    <div id="ticket-success" style="display:none;background:var(--success-soft);color:var(--success);padding:12px 14px;border-radius:8px;font-size:.88rem;margin-bottom:14px">
+      Talebin alındı, en kısa sürede dönüş yapacağız.
+    </div>
+    <form id="ticket-form">
+      <div class="field">
+        <label>Konu</label>
+        <select id="ticket-konu">
+          <option>Hesap ile ilgili sorun</option>
+          <option>Teklif / sipariş ile ilgili sorun</option>
+          <option>Ödeme ile ilgili soru</option>
+          <option>Hata bildirimi</option>
+          <option>Diğer</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Mesajın</label>
+        <textarea id="ticket-mesaj" placeholder="Yaşadığın sorunu veya sorunu detaylıca anlat" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Talebi Gönder</button>
+    </form>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+  document.getElementById('ticket-form').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const mesaj = document.getElementById('ticket-mesaj').value.trim();
+    const errBox = document.getElementById('ticket-error');
+    if(!mesaj){
+      errBox.textContent = 'Lütfen mesajını yaz.';
+      errBox.classList.add('show');
+      return;
+    }
+    errBox.classList.remove('show');
+    const konu = document.getElementById('ticket-konu').value;
+    const user = DB.currentUser();
+    const tickets = DB._get('kodla_destek_talepleri', []);
+    tickets.push({ id: DB.uid('talep'), konu, mesaj, userId: user ? user.id : null, tarih: Date.now() });
+    DB._set('kodla_destek_talepleri', tickets);
+    document.getElementById('ticket-success').style.display = 'block';
+    document.getElementById('ticket-form').reset();
+  });
+</script>
+</body>
+</html>

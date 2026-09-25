@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kayıt Ol — Kodla</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header-mount"></div>
+
+<div class="auth-wrap">
+  <div class="auth-box wide">
+    <h1 style="font-size:1.4rem;margin-bottom:4px">Kayıt ol</h1>
+    <p style="margin-bottom:20px">Birkaç adımda Kodla'ya katıl.</p>
+
+    <div class="role-toggle" id="role-toggle">
+      <button type="button" data-role="alici">Alıcı olarak kayıt ol</button>
+      <button type="button" data-role="satici">Satıcı olarak kayıt ol</button>
+    </div>
+
+    <div class="error-box" id="register-error"></div>
+
+    <form id="register-form">
+      <div class="row-2">
+        <div class="field">
+          <label>İsim Soyisim</label>
+          <input type="text" id="reg-name" placeholder="Örn: Ahmet Yıldız" required>
+        </div>
+        <div class="field">
+          <label>Gmail adresi</label>
+          <input type="email" id="reg-email" placeholder="adiniz@gmail.com" required>
+        </div>
+      </div>
+      <div class="field">
+        <label>Şifre</label>
+        <input type="password" id="reg-password" placeholder="En az 6 karakter" required>
+      </div>
+
+      <div id="alici-fields">
+        <p class="hint" style="margin:-6px 0 10px">Alıcı hesabı sadece gmail ve şifre ile açılır — hemen satıcı aramaya başlayabilirsin.</p>
+      </div>
+
+      <div id="satici-fields">
+        <div class="field">
+          <label>Unvan / uzmanlık başlığın</label>
+          <input type="text" id="reg-title" placeholder="Örn: Full-Stack Web Geliştirici">
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label>Mezuniyet</label>
+            <input type="text" id="reg-mezuniyet" placeholder="Üniversite — Bölüm">
+          </div>
+          <div class="field">
+            <label>Uzmanlık alanları</label>
+            <input type="text" id="reg-uzmanlik" placeholder="React, Node.js, Python (virgülle ayır)">
+          </div>
+        </div>
+        <div class="field">
+          <label>Hakkımda</label>
+          <textarea id="reg-hakkinda" placeholder="Ne tür işlerle uğraştığını, deneyimini kısaca anlat"></textarea>
+        </div>
+        <div class="field">
+          <label>Proje başına fiyat aralığın (₺)</label>
+          <div class="range-inputs">
+            <input type="number" id="reg-min" placeholder="Min. 5000">
+            <span>—</span>
+            <input type="number" id="reg-max" placeholder="Maks. 30000">
+          </div>
+        </div>
+        <div class="field">
+          <label>Geçmiş projelerin</label>
+          <div class="repeater" id="proje-repeater"></div>
+          <button type="button" class="btn btn-outline btn-sm" id="add-proje">+ Proje ekle</button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" style="margin-top:6px">Hesap Oluştur</button>
+    </form>
+
+    <div class="form-foot">Zaten hesabın var mı? <a href="giris.html" style="color:var(--accent);font-weight:600">Giriş yap</a></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', ()=>{
+    initRegisterPage();
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('role') === 'satici'){
+      document.querySelector('#role-toggle button[data-role="satici"]').click();
+    }
+  });
+</script>
+</body>
+</html>

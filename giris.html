@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giriş Yap — Kodla</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header-mount"></div>
+
+<div class="auth-wrap">
+  <div class="auth-box">
+    <h1 style="font-size:1.4rem;margin-bottom:4px">Giriş yap</h1>
+    <p style="margin-bottom:20px">Kodla hesabınla devam et.</p>
+
+    <div class="role-toggle" id="role-toggle">
+      <button type="button" data-role="alici">Alıcıyım</button>
+      <button type="button" data-role="satici">Satıcıyım</button>
+      <button type="button" data-role="admin">Yönetici</button>
+    </div>
+
+    <div class="error-box" id="login-error"></div>
+
+    <form id="login-form">
+      <div class="field">
+        <label>Gmail adresi</label>
+        <input type="email" id="login-email" placeholder="adiniz@gmail.com" required>
+      </div>
+      <div class="field">
+        <label>Şifre</label>
+        <input type="password" id="login-password" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
+      <button type="button" class="btn btn-ghost btn-block" id="demo-fill" style="margin-top:8px">Demo hesap bilgilerini doldur</button>
+    </form>
+
+    <div class="form-foot">Hesabın yok mu? <a href="kayit.html" style="color:var(--accent);font-weight:600">Kayıt ol</a></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="auth.js"></script>
+<script>document.addEventListener('DOMContentLoaded', initLoginPage);</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alıcı Paneli — Kodla</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header-mount"></div>
+
+<div class="app-shell">
+  <aside class="side-nav">
+    <div class="who">
+      <img id="who-avatar" class="avatar" alt="">
+      <div><b id="who-name"></b><span>Alıcı hesabı</span></div>
+    </div>
+    <nav>
+      <button class="tab-link active" data-tab="satici">🔍 Satıcıları Keşfet</button>
+      <button class="tab-link" data-tab="teklif">📨 Tekliflerim</button>
+      <button class="tab-link" data-tab="siparis">📦 Siparişlerim</button>
+      <a href="mesajlar.html">💬 Mesajlar</a>
+    </nav>
+  </aside>
+
+  <main class="main-panel">
+    <div id="tab-satici" class="tab-panel">
+      <div class="panel-head">
+        <h1>Satıcıları keşfet</h1>
+      </div>
+      <div class="row-2" style="margin-bottom:22px">
+        <input type="text" id="seller-search" placeholder="İsim veya uzmanlık ara...">
+        <select id="seller-filter"></select>
+      </div>
+      <div class="grid-cards" id="seller-grid"></div>
+    </div>
+
+    <div id="tab-teklif" class="tab-panel" style="display:none">
+      <div class="panel-head"><h1>Gönderdiğim teklifler</h1></div>
+      <div id="my-offers"></div>
+    </div>
+
+    <div id="tab-siparis" class="tab-panel" style="display:none">
+      <div class="panel-head"><h1>Siparişlerim</h1></div>
+      <div id="my-orders"></div>
+    </div>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="alici.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const user = requireAuth('alici');
+    if(!user) return;
+    document.getElementById('who-avatar').src = user.avatar;
+    document.getElementById('who-name').textContent = user.name;
+
+    renderSellerGrid();
+    renderMyOffers();
+    renderMyOrders();
+
+    const tabs = document.querySelectorAll('.tab-link');
+    function showTab(name){
+      tabs.forEach(t=> t.classList.toggle('active', t.dataset.tab === name));
+      document.querySelectorAll('.tab-panel').forEach(p=> p.style.display = 'none');
+      document.getElementById('tab-'+name).style.display = 'block';
+    }
+    tabs.forEach(t=> t.addEventListener('click', ()=> showTab(t.dataset.tab)));
+
+    const params = new URLSearchParams(window.location.search);
+    const wanted = params.get('tab');
+    if(wanted === 'teklifler') showTab('teklif');
+    else if(wanted === 'siparisler') showTab('siparis');
+    else if(wanted === 'profil') showTab('siparis');
+  });
+</script>
+</body>
+</html>

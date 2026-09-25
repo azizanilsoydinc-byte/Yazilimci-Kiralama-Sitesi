@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sıkça Sorulan Sorular — Kodla</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header-mount"></div>
+
+<div class="container" style="padding:48px 24px 70px;max-width:800px">
+  <h1 style="font-size:1.9rem;margin-bottom:8px">Sıkça Sorulan Sorular</h1>
+  <p style="margin-bottom:30px">Kodla hakkında en çok merak edilenler.</p>
+
+  <div id="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Kodla nasıl çalışır? <span class="plus">+</span></div>
+      <div class="faq-a">İhtiyacın olan yazılımı anlatan bir teklif oluşturursun, ilgilendiğin satıcıya gönderirsin. Satıcı teklifi kabul eder ya da karşı teklif verir; anlaşma sağlanınca sipariş otomatik olarak açılır ve sohbet üzerinden süreç takip edilir.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Alıcı ve satıcı hesabı arasındaki fark nedir? <span class="plus">+</span></div>
+      <div class="faq-a">Alıcı hesabı sadece gmail adresi ve şifre ile açılır; satıcı arayıp teklif vermeye başlayabilirsin. Satıcı hesabı ise ek olarak uzmanlık alanların, mezuniyet bilgin, geçmiş projelerin ve fiyat aralığını da içerir, çünkü profilinin alıcılara güven vermesi gerekir.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Karşı teklif nasıl işler? <span class="plus">+</span></div>
+      <div class="faq-a">Satıcı, gelen teklifi olduğu gibi kabul edebilir veya farklı bir tutar ile birlikte bir yorum ekleyerek karşı teklif gönderebilir. Alıcı bu karşı teklifi kabul ederse sipariş bu yeni tutar üzerinden başlar; reddederse teklif kapanır.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Sipariş durumları neyi ifade eder? <span class="plus">+</span></div>
+      <div class="faq-a">Satıcı sipariş sürecini "İnceleniyor", "Hazırlanıyor", "Denetleniyor" ve "Hazır" adımlarıyla günceller. Durum "Hazır" olarak işaretlendiğinde alıcıya otomatik bir bildirim gider.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Sohbette dosya veya video paylaşabilir miyim? <span class="plus">+</span></div>
+      <div class="faq-a">Evet. Alıcı ve satıcı sipariş sohbetinde dosya paylaşabilir. Satıcılar isterse teslimattan önce yazdığı kodun kısa bir tanıtım videosunu da ekleyebilir — bu tamamen opsiyoneldir.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Ödeme nasıl yapılıyor? <span class="plus">+</span></div>
+      <div class="faq-a">Bu, platformun mevcut prototip sürümünde henüz bulunmuyor; alıcı ve satıcı bütçe konusunda teklif/karşı teklif üzerinden anlaşır. Ödeme altyapısı sonraki sürümlerde eklenecek.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Sorum burada yanıtlanmadı, ne yapmalıyım? <span class="plus">+</span></div>
+      <div class="faq-a">Destek merkezimizden bize ulaşabilirsin, en kısa sürede dönüş yaparız.</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:40px">
+    <a href="destek.html" class="btn btn-primary">Destek Merkezine Git</a>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.querySelector('.faq-q').addEventListener('click', ()=> item.classList.toggle('open'));
+  });
+</script>
+</body>
+</html>
